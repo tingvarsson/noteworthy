@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -8,10 +9,20 @@ import (
 	"github.com/tingvarsson/rss"
 )
 
+type RssFeed rss.TopElement
+
+func (r RssFeed) String() string {
+	var buffer bytes.Buffer
+	buffer.WriteString(fmt.Sprintf("Title:%s (%s)\n", r.Channel.Title, r.Channel.Link))
+	for _, i := range r.Channel.Items {
+		buffer.WriteString(fmt.Sprintf("-- [%s] %s (%s)\n%s\n\n", i.PubDate, i.Title, i.Link, i.Description))
+	}
+	return buffer.String()
+}
+
 func main() {
 	url := flag.String("url", "rss.php", "the url to the target rss feed")
 	flag.Parse()
-	fmt.Println(*url)
 
 	rssFile, err := ioutil.ReadFile(*url)
 	if err != nil {
@@ -24,7 +35,7 @@ func main() {
 		fmt.Println("Error decoding rss feed:", err)
 	}
 
-	fmt.Println(rssData)
+	fmt.Println(RssFeed(rssData))
 
 	newRssFile, err := rss.Encode(rssData)
 	if err != nil {
