@@ -12,9 +12,9 @@ import (
 	"github.com/tingvarsson/rss"
 )
 
-type RssFeed rss.TopElement
+type RSSFeed rss.TopElement
 
-func (r RssFeed) String() string {
+func (r RSSFeed) String() string {
 	var buffer bytes.Buffer
 	buffer.WriteString(fmt.Sprintf("Title:%s (%s)\n", r.Channel.Title, r.Channel.Link))
 	for _, i := range r.Channel.Items {
@@ -43,7 +43,7 @@ func main() {
 		log.Panicln(err)
 	}
 
-	fmt.Println(RssFeed(rssData))
+	fmt.Println(RSSFeed(rssData))
 
 	cv := NewCuiView(&rssData)
 	defer cv.Close()
