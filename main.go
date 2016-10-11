@@ -44,10 +44,3 @@ func main() {
 
 	err = ioutil.WriteFile("test.php", newRssFile, 0644)
 }
-
-// TODO
-// - convert to cui format (move around, launch browser, some pretty styling)
-// - fetch feed from ze interwebz (instead of good old file)
-// - file with a list of feeds (urls basically that are then fetched, decoded, and listed)
-// - Add a heirarchy of Top(options, manage(add/remove feed), and feeds)/Feeds(based on input)/Items(fetched per feed)
-// - possibly convert to client/server style with a DB in the bg that keeps track of read/unread, and managed feeds (futuristic)
